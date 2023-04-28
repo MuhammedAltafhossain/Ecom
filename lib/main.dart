@@ -1,3 +1,4 @@
+import 'package:ecom/ui/screens/eamilAuth_screen.dart';
 import 'package:ecom/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SplashScreen(),
+      home: EmailAuthScreen(),
     );
   }
 }

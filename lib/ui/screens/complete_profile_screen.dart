@@ -1,3 +1,4 @@
+import 'package:ecom/ui/screens/main_bottom_navigation_bar.dart';
 import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:ecom/ui/widget/add_text_from_field_widget.dart';
 import 'package:ecom/ui/widget/app_elevated_button.dart';
@@ -92,11 +93,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 AppElevatedButton(
                   text: 'Complete',
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                const CompleteProfileScreen()));
+                                const MainBottomNavigationBar()),
+                        (route) => false);
                   },
                 ),
                 const SizedBox(

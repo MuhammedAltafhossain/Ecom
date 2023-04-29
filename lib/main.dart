@@ -1,7 +1,5 @@
-import 'package:ecom/ui/screens/eamilAuth_screen.dart';
-import 'package:ecom/ui/screens/splash_screen.dart';
+import 'package:ecom/ui/screens/email_auth_screen.dart';
 import 'package:flutter/material.dart';
-import '';
 
 void main() {
   runApp(const MyApp());

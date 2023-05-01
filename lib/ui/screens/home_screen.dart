@@ -1,3 +1,7 @@
+import 'package:ecom/ui/widget/category_item_widget.dart';
+import 'package:ecom/ui/widget/home/home_banner_slider.dart';
+import 'package:ecom/ui/widget/home/section_header.dart';
+import 'package:ecom/ui/widget/product_item)preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -28,7 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.grey.shade700,
             ),
           ),
-          const SizedBox(width: 5,),
+          const SizedBox(
+            width: 5,
+          ),
           CircleAvatar(
             backgroundColor: Colors.grey.shade200,
             radius: 16,
@@ -38,7 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.grey.shade700,
             ),
           ),
-          const SizedBox(width: 5,),
+          const SizedBox(
+            width: 5,
+          ),
           CircleAvatar(
             backgroundColor: Colors.grey.shade200,
             radius: 16,
@@ -50,7 +58,117 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Column(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              HomeBannerSlider(),
+              SectionHeader(
+                HeaderName: 'All Categories',
+                onTapSeeAll: () {},
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CategoryItemWidget(
+                      onTap: () {},
+                      icon: Icons.computer,
+                      categoryItemName: 'Electronics',
+                    ),
+                    CategoryItemWidget(
+                      onTap: () {},
+                      icon: Icons.add_business,
+                      categoryItemName: 'Tools',
+                    ),
+                    CategoryItemWidget(
+                      onTap: () {},
+                      icon: Icons.shop_outlined,
+                      categoryItemName: 'Shop',
+                    ),
+                    CategoryItemWidget(
+                      onTap: () {},
+                      icon: Icons.add_chart_outlined,
+                      categoryItemName: 'Add Chart',
+                    ),
+                    CategoryItemWidget(
+                      onTap: () {},
+                      icon: Icons.today_outlined,
+                      categoryItemName: 'today',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              SectionHeader(
+                HeaderName: 'Popular',
+                onTapSeeAll: () {},
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              SectionHeader(
+                HeaderName: 'Special',
+                onTapSeeAll: () {},
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              SectionHeader(
+                HeaderName: 'New',
+                onTapSeeAll: () {},
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                    ProductItemPreviewCard(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

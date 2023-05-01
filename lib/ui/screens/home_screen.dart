@@ -1,7 +1,7 @@
 import 'package:ecom/ui/widget/category_item_widget.dart';
 import 'package:ecom/ui/widget/home/home_banner_slider.dart';
 import 'package:ecom/ui/widget/home/section_header.dart';
-import 'package:ecom/ui/widget/product_item)preview_card.dart';
+import 'package:ecom/ui/widget/product_item_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

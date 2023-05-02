@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class AddTextFieldWidget extends StatelessWidget {
   const AddTextFieldWidget({
-    super.key, required this.controller, required this.hintText, this.maxLines,
+    super.key, required this.controller, this.hintText, this.maxLines,
   });
 
   final TextEditingController controller;
-  final String hintText ;
+  final String? hintText ;
   final int? maxLines;
   @override
   Widget build(BuildContext context) {

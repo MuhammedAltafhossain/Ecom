@@ -2,6 +2,7 @@ import 'package:ecom/ui/getx/bottom_navigation_controller.dart';
 import 'package:ecom/ui/screens/carts_screen.dart';
 import 'package:ecom/ui/screens/category_screen.dart';
 import 'package:ecom/ui/screens/home_screen.dart';
+import 'package:ecom/ui/screens/wish_list_screen.dart';
 import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
     HomeScreen(),
     ProductCategoryScreen(),
     CartsScreen(),
-    HomeScreen(),
+    WishListScreen(),
   ];
 
   @override

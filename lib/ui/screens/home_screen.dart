@@ -1,3 +1,4 @@
+import 'package:ecom/ui/getx/category_controller.dart';
 import 'package:ecom/ui/getx/home_controller.dart';
 import 'package:ecom/ui/widget/category_item_widget.dart';
 import 'package:ecom/ui/widget/home/home_banner_slider.dart';
@@ -16,14 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomeController homeController = Get.put(HomeController());
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    homeController.getProductSliderList();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,38 +100,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 HeaderName: 'All Categories',
                 onTapSeeAll: () {},
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CategoryItemWidget(
-                      onTap: () {},
-                      icon: Icons.computer,
-                      categoryItemName: 'Electronics',
-                    ),
-                    CategoryItemWidget(
-                      onTap: () {},
-                      icon: Icons.add_business,
-                      categoryItemName: 'Tools',
-                    ),
-                    CategoryItemWidget(
-                      onTap: () {},
-                      icon: Icons.shop_outlined,
-                      categoryItemName: 'Shop',
-                    ),
-                    CategoryItemWidget(
-                      onTap: () {},
-                      icon: Icons.add_chart_outlined,
-                      categoryItemName: 'Add Chart',
-                    ),
-                    CategoryItemWidget(
-                      onTap: () {},
-                      icon: Icons.today_outlined,
-                      categoryItemName: 'today',
-                    ),
-                  ],
-                ),
-              ),
+              GetBuilder<CategoryController>(builder: (controller) {
+                if (controller.getCategoryInProgress) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return SizedBox(
+                    height: 100,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.categoryModel.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return CategoryItemWidget(
+                              categoryItemName: controller.categoryModel
+                                      .data?[index].categoryName ??
+                                  '',
+                              image: controller
+                                      .categoryModel.data?[index].categoryImg ??
+                                  '',
+                              onTap: () {});
+                        }),
+                  );
+                }
+              }),
               const SizedBox(height: 16),
               SectionHeader(
                 HeaderName: 'Popular',

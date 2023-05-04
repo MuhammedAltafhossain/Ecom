@@ -1,4 +1,5 @@
 import 'package:ecom/ui/getx/bottom_navigation_controller.dart';
+import 'package:ecom/ui/getx/category_controller.dart';
 import 'package:ecom/ui/widget/category_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,20 +25,38 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
           style: TextStyle(color: Colors.black54),
         ),
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             controller.changeIndex(0);
           },
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black54,),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black54,
+          ),
         ),
       ),
-      body: GridView.builder(
-          itemCount: 10,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4),
-          itemBuilder: (context, index) {
-            return CategoryItemWidget(
-                categoryItemName: "ABC", icon: Icons.adb, onTap: () {});
-          }),
+      body: GetBuilder<CategoryController>(builder: (controller) {
+        if(controller.getCategoryInProgress){
+          return const Center(child: CircularProgressIndicator(),);
+        }
+
+        return RefreshIndicator(
+          onRefresh: () async {
+            controller.getCategoryList();
+          },
+          child: GridView.builder(
+              itemCount: controller.categoryModel.data?.length ?? 0,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4),
+              itemBuilder: (context, index) {
+                return CategoryItemWidget(
+                    categoryItemName:
+                        controller.categoryModel.data?[index].categoryName ?? '',
+                    image:
+                        controller.categoryModel.data?[index].categoryImg ?? '',
+                    onTap: () {});
+              }),
+        );
+      }),
     );
   }
 }

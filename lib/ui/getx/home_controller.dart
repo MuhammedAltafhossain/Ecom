@@ -17,6 +17,7 @@ class HomeController extends GetxController {
 
     if (result != null) {
       productSliderModel = ProductSliderModel.fromJson(result);
+      update();
       return true;
     } else {
       update();

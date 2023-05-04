@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 
 class CategoryItemWidget extends StatelessWidget {
   const CategoryItemWidget({
-    super.key, required this.categoryItemName, required this.icon, required this.onTap,
+    super.key,
+    required this.categoryItemName,
+    required this.image,
+    required this.onTap,
   });
 
   final String categoryItemName;
-  final IconData icon;
+  final String image;
   final VoidCallback onTap;
 
   @override
@@ -21,15 +24,13 @@ class CategoryItemWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.15),
+                  // color: AppColors.primaryColor.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(8)),
-              child: Icon(
-                icon, size: 32,
-                color: AppColors.primaryColor,
+              child: Image.network(
+                image,
+                height: 35,
+                width: 30,
               ),
-            ),
-            const SizedBox(
-              height: 6,
             ),
             Text(
               categoryItemName,

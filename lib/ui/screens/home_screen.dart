@@ -6,6 +6,7 @@ import 'package:ecom/ui/widget/product_item_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '.././widget/shimmer_loader_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -90,17 +91,16 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
 
               //Home Controller listen
-              GetBuilder<HomeController>(
-                  builder: (homeController) {
-                    if(homeController.getProductSliderInProgress){
-                      return CircularProgressIndicator();
-                    }
-                    else{
-                      return HomeBannerSlider(
-                        productSliderModel: homeController.productSliderModel,
-                      );
-                    }
-
+              GetBuilder<HomeController>(builder: (homeController) {
+                if (homeController.getProductSliderInProgress) {
+                  return const ShimmerLoaderWidget(
+                    sizedBoxHeight: 180,
+                  );
+                } else {
+                  return HomeBannerSlider(
+                    productSliderModel: homeController.productSliderModel,
+                  );
+                }
               }),
               SectionHeader(
                 HeaderName: 'All Categories',

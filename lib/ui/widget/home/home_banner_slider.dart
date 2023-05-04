@@ -27,18 +27,19 @@ class HomeBannerSlider extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   'text $i',
-                  style: TextStyle(fontSize: 16.0),
+                  style: const TextStyle(fontSize: 16.0),
                 ),
               );
             });
           }).toList(),
           options: CarouselOptions(
+            autoPlay: true,
+              reverse: true,
               height: 180.0,
               viewportFraction: 1,
               onPageChanged: (index, _) {
                 _currentSelectedIndex.value = index;
               }),
-
         ),
         const SizedBox(
           height: 4,

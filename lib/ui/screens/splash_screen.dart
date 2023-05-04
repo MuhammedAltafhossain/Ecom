@@ -1,3 +1,4 @@
+import 'package:ecom/ui/screens/main_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/app_colors.dart';
@@ -10,6 +11,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    //2 second delayed next screen
+    Future.delayed(const Duration(seconds: 2)).then((value) =>
+    {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => const MainBottomNavigationBar()), (
+              route) => false)
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

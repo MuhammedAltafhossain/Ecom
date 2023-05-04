@@ -1,9 +1,11 @@
+import 'package:ecom/ui/getx/home_controller.dart';
 import 'package:ecom/ui/widget/category_item_widget.dart';
 import 'package:ecom/ui/widget/home/home_banner_slider.dart';
 import 'package:ecom/ui/widget/home/section_header.dart';
 import 'package:ecom/ui/widget/product_item_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +15,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  HomeController homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    homeController.getProductSliderList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              HomeBannerSlider(),
+
+              //Home Controller listen
+              GetBuilder<HomeController>(
+                  builder: (homeController) {
+                    if(homeController.getProductSliderInProgress){
+                      return CircularProgressIndicator();
+                    }
+                    else{
+                      return HomeBannerSlider(
+                        productSliderModel: homeController.productSliderModel,
+                      );
+                    }
+
+              }),
               SectionHeader(
                 HeaderName: 'All Categories',
                 onTapSeeAll: () {},

@@ -4,7 +4,7 @@ import 'package:flutter/animation.dart';
 import 'package:http/http.dart';
 
 class NetworkUtils {
-  //Get Method for http request 
+  //Get Method for http request
   Future<dynamic> getMethod(String url, {VoidCallback? onUnathorize}) async {
     try {
       Uri uri = Uri.parse(url);
@@ -27,7 +27,7 @@ class NetworkUtils {
   }
 
   //Post Method for http request
-  Future<dynamic> postMathod(
+  Future<dynamic> postMethod(
     String url, {
     VoidCallback? onUnathorize,
     Map<String, String>? body,

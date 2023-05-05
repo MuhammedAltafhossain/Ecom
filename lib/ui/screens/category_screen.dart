@@ -1,5 +1,6 @@
 import 'package:ecom/ui/getx/bottom_navigation_controller.dart';
 import 'package:ecom/ui/getx/category_controller.dart';
+import 'package:ecom/ui/screens/product_list_screen.dart';
 import 'package:ecom/ui/widget/category_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,8 +36,10 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
         ),
       ),
       body: GetBuilder<CategoryController>(builder: (controller) {
-        if(controller.getCategoryInProgress){
-          return const Center(child: CircularProgressIndicator(),);
+        if (controller.getCategoryInProgress) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         return RefreshIndicator(
@@ -50,10 +53,23 @@ class _ProductCategoryScreenState extends State<ProductCategoryScreen> {
               itemBuilder: (context, index) {
                 return CategoryItemWidget(
                     categoryItemName:
-                        controller.categoryModel.data?[index].categoryName ?? '',
+                        controller.categoryModel.data?[index].categoryName ??
+                            '',
                     image:
                         controller.categoryModel.data?[index].categoryImg ?? '',
-                    onTap: () {});
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductListScreen(
+                            categoryId:
+                                '${controller.categoryModel.data![index].id ?? 1}',
+                            categoryName:
+                                '${controller.categoryModel.data![index].categoryName}',
+                          ),
+                        ),
+                      );
+                    });
               }),
         );
       }),

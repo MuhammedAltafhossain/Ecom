@@ -1,6 +1,7 @@
 import 'package:ecom/ui/getx/bottom_navigation_controller.dart';
 import 'package:ecom/ui/getx/category_controller.dart';
 import 'package:ecom/ui/getx/home_controller.dart';
+import 'package:ecom/ui/getx/product_controller.dart';
 import 'package:ecom/ui/screens/carts_screen.dart';
 import 'package:ecom/ui/screens/category_screen.dart';
 import 'package:ecom/ui/screens/home_screen.dart';
@@ -21,6 +22,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
   BottomNavigationController controller = Get.put(BottomNavigationController());
   HomeController homeController = Get.put(HomeController());
   CategoryController categoryController = Get.put(CategoryController());
+  ProductController productController = Get.put(ProductController());
 
   final List<Widget> screen = const [
     HomeScreen(),
@@ -33,8 +35,15 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    homeController.getProductSliderList();
-    categoryController.getCategoryList();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      homeController.getProductSliderList();
+      categoryController.getCategoryList();
+      productController.getNewProducts();
+      productController.getPopularProducts();
+      productController.getSpecialProducts();
+    });
+
+
   }
 
   @override

@@ -1,11 +1,14 @@
+import 'package:ecom/data/model/product_model.dart';
 import 'package:ecom/ui/screens/product_details_screen.dart';
 import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProductItemPreviewCard extends StatelessWidget {
   const ProductItemPreviewCard({
-    super.key,
+    super.key, required this.productData,
   });
+
+  final ProductData productData;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,8 @@ class ProductItemPreviewCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image.asset(
-              'assets/images/product.png',
+            Image.network(
+              productData.image ?? '',
               width: 160,
               height: 80,
               fit: BoxFit.cover,
@@ -30,10 +33,10 @@ class ProductItemPreviewCard extends StatelessWidget {
             const SizedBox(
               height: 6,
             ),
-            const Text(
-              "Product Name",
+            Text(
+              productData.title ?? '',
               maxLines: 2,
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   color: Colors.black54,
                   letterSpacing: 0.4,
@@ -44,7 +47,7 @@ class ProductItemPreviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '\$800',
+                  '\$${productData.price}',
                   style: TextStyle(
                     color: AppColors.primaryColor,
                     fontSize: 12,
@@ -57,9 +60,9 @@ class ProductItemPreviewCard extends StatelessWidget {
                   color: Colors.amberAccent,
                   size: 14,
                 ),
-                const Text(
-                  '4.5',
-                  style: TextStyle(
+                Text(
+                  '${productData.star ?? 0.0 }',
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 12,
                     fontWeight: FontWeight.w400,

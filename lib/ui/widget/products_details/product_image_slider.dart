@@ -3,7 +3,8 @@ import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ProductImageSlider extends StatelessWidget {
-  ProductImageSlider({Key? key}) : super(key: key);
+  final List<String> sliders;
+  ProductImageSlider({Key? key, required this.sliders}) : super(key: key);
 
   final ValueNotifier<int> _currentSelectedIndex = ValueNotifier(0);
   final CarouselController _carouselController = CarouselController();
@@ -14,22 +15,18 @@ class ProductImageSlider extends StatelessWidget {
       children: [
         CarouselSlider(
           carouselController: _carouselController,
-          items: [1, 2, 3, 4, 5].map((i) {
+          items: sliders.map((slider) {
             return Builder(builder: (BuildContext context) {
               return Container(
                 // margin: const EdgeInsets.symmetric(horizontal: 3),
                 width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/images/product.png'),
-                      fit: BoxFit.cover),
+                      image: NetworkImage(slider),
+                      fit: BoxFit.scaleDown),
                   // borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,
-                child: Text(
-                  'text $i',
-                  style: TextStyle(fontSize: 16.0),
-                ),
               );
             });
           }).toList(),

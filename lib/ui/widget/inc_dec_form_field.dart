@@ -1,17 +1,19 @@
-
 import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class IncDecFormField extends StatefulWidget {
   const IncDecFormField({
     super.key,
+    required this.onChange,
   });
+
+  final Function(int) onChange;
 
   @override
   State<IncDecFormField> createState() => _IncDecFormFieldState();
 }
 
-class _IncDecFormFieldState extends State<IncDecFormField>  {
+class _IncDecFormFieldState extends State<IncDecFormField> {
   int currentValue = 1;
   final TextEditingController controller = TextEditingController();
 
@@ -20,8 +22,10 @@ class _IncDecFormFieldState extends State<IncDecFormField>  {
     // TODO: implement initState
     super.initState();
     controller.text = currentValue.toString();
+    controller.addListener(() {
+      widget.onChange(currentValue);
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {

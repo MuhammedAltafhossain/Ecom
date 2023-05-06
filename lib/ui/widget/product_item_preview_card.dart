@@ -15,7 +15,7 @@ class ProductItemPreviewCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ProductDetailsScreen()));
+            MaterialPageRoute(builder: (context) => ProductDetailsScreen(productId: productData.id ?? 0,)));
       },
       child: Card(
         elevation: 5,

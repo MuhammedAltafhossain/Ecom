@@ -18,7 +18,8 @@ class HomeBannerSlider extends StatelessWidget {
         CarouselSlider(
           carouselController: _carouselController,
           items: productSliderModel.data?.map((slider) {
-            return Builder(builder: (BuildContext context) {
+            return Builder(
+                builder: (BuildContext context) {
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 3),
                 width: MediaQuery.of(context).size.width,
@@ -79,7 +80,7 @@ class HomeBannerSlider extends StatelessWidget {
           }).toList(),
           options: CarouselOptions(
               autoPlay: true,
-              reverse: true,
+              reverse: false,
               height: 180.0,
               viewportFraction: 1,
               onPageChanged: (index, _) {

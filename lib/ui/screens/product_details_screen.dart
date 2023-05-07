@@ -1,4 +1,5 @@
 import 'package:ecom/data/model/product_details_model.dart';
+import 'package:ecom/ui/getx/auth_controller.dart';
 import 'package:ecom/ui/getx/product_details_controller.dart';
 import 'package:ecom/ui/screens/reviews_screen.dart';
 import 'package:ecom/ui/utils/app_colors.dart';
@@ -21,6 +22,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   ProductDetailsController productDetailsController =
       Get.put(ProductDetailsController());
+  final AuthController _authController = Get.put(AuthController());
   Color? selectedColor;
   String? selectedSize;
   double totalAmount = 0.0;
@@ -301,7 +303,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           style: TextStyle(color: Colors.black54),
                         ),
                         Text(
-                          '\$${totalAmount}',
+                          '\$$totalAmount',
                           style: TextStyle(
                             color: AppColors.primaryColor,
                             fontSize: 15,
@@ -311,9 +313,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ],
                     ),
                     SizedBox(
-                        width: 120,
-                        child: AppElevatedButton(
-                            text: 'Add to Cart', onTap: () {}))
+                      width: 120,
+                      child: AppElevatedButton(
+                        text: 'Add to Cart',
+                        onTap: () {
+                          final bool _authState =
+                              _authController.checkAuthState();
+                          if (_authState) {}
+                        },
+                      ),
+                    ),
                   ],
                 ),
               )

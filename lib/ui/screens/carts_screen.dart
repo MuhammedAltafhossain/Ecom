@@ -1,4 +1,7 @@
+import 'package:ecom/ui/getx/auth_controller.dart';
 import 'package:ecom/ui/getx/bottom_navigation_controller.dart';
+import 'package:ecom/ui/screens/email_auth_screen.dart';
+import 'package:ecom/ui/screens/home_screen.dart';
 import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:ecom/ui/widget/app_elevated_button.dart';
 import 'package:ecom/ui/widget/carts/cart_product_item.dart';
@@ -14,6 +17,21 @@ class CartsScreen extends StatefulWidget {
 
 class _CartsScreenState extends State<CartsScreen> {
   BottomNavigationController controller = Get.put(BottomNavigationController());
+  AuthController authController = Get.put(AuthController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!authController.authState) {
+        controller.selectedIndex = 0;
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const EmailAuthScreen()));
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {

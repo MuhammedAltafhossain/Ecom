@@ -1,5 +1,6 @@
 import 'package:ecom/ui/getx/auth_controller.dart';
 import 'package:ecom/ui/getx/bottom_navigation_controller.dart';
+import 'package:ecom/ui/getx/user_controller.dart';
 import 'package:ecom/ui/screens/email_auth_screen.dart';
 import 'package:ecom/ui/screens/home_screen.dart';
 import 'package:ecom/ui/utils/app_colors.dart';
@@ -17,14 +18,14 @@ class CartsScreen extends StatefulWidget {
 
 class _CartsScreenState extends State<CartsScreen> {
   BottomNavigationController controller = Get.put(BottomNavigationController());
-  AuthController authController = Get.put(AuthController());
+  UserController _userController = Get.put(UserController());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (!authController.authState) {
+      if (_userController.userToken == null) {
         controller.selectedIndex = 0;
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const EmailAuthScreen()));

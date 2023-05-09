@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:ecom/ui/getx/user_controller.dart';
 import 'package:flutter/animation.dart';
+import 'package:get/get.dart' as gt;
 import 'package:http/http.dart';
 
 class NetworkUtils {
+  UserController userController = gt.Get.put(UserController());
   //Get Method for http request
   Future<dynamic> getMethod(String url, {VoidCallback? onUnathorize}) async {
-    try {
+     try {
       Uri uri = Uri.parse(url);
       final Response response = await get(uri, headers: {
-        'content-type': 'Application/json', 'token': ''
+        'content-type': 'Application/json',
+        'token': userController.userToken ?? ''
       });
       log(response.body);
       if (response.statusCode == 200) {

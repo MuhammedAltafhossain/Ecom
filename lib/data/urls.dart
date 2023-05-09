@@ -5,6 +5,7 @@ class Urls {
   static const String productRemarksNew = '$baseUrl/ListProductByRemark/new';
   static const String productRemarksSpeceil = '$baseUrl/ListProductByRemark/special';
   static const String productRemarksPopular = '$baseUrl/ListProductByRemark/popular';
+  static const String readProfileDetails = '$baseUrl/ReadProfile';
 
   static String productbyCategoryUrl(String categoryId) =>
       '$baseUrl/ListProductByCategory/$categoryId';
@@ -14,4 +15,9 @@ class Urls {
 
   static String sendOtpToEmail(String email) =>
       '$baseUrl/UserLogin/$email';
+
+  static String otpVerification(String email, String otp) =>
+      '$baseUrl/VerifyLogin/$email/$otp';
+
+
 }

@@ -7,9 +7,10 @@ import 'package:http/http.dart';
 
 class NetworkUtils {
   UserController userController = gt.Get.put(UserController());
+
   //Get Method for http request
   Future<dynamic> getMethod(String url, {VoidCallback? onUnathorize}) async {
-     try {
+    try {
       Uri uri = Uri.parse(url);
       final Response response = await get(uri, headers: {
         'content-type': 'Application/json',
@@ -33,21 +34,28 @@ class NetworkUtils {
   //Post Method for http request
   Future<dynamic> postMethod(
     String url, {
-    VoidCallback? onUnathorize,
+    VoidCallback? onUnAuthorize,
     Map<String, String>? body,
   }) async {
     try {
       Uri uri = Uri.parse(url);
       final Response response = await post(uri,
-          headers: {'content-type': 'Application/json', 'token': ''},
-          body: body);
+          headers: {
+            'content-type': 'Application/json',
+            'token': userController.userToken ?? ''
+          },
+          body: jsonEncode(body));
       log(response.body);
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
       } else if (response.statusCode == 401) {
-        if (onUnathorize != null) {
-          onUnathorize();
+        // if (onUnAuthorize != null) {
+        //   onUnAuthorize();
+        // }
+        if (userController.userToken != null) {
+          userController.logout();
         }
+        userController.redireactUnauthenticatedUser();
       } else {
         log('status Code ${response.statusCode}');
       }

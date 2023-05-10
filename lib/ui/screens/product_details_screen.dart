@@ -1,5 +1,5 @@
 import 'package:ecom/data/model/product_details_model.dart';
-import 'package:ecom/ui/getx/auth_controller.dart';
+import 'package:ecom/ui/getx/cart_controller.dart';
 import 'package:ecom/ui/getx/product_details_controller.dart';
 import 'package:ecom/ui/getx/user_controller.dart';
 import 'package:ecom/ui/screens/reviews_screen.dart';
@@ -7,6 +7,7 @@ import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:ecom/ui/widget/app_elevated_button.dart';
 import 'package:ecom/ui/widget/inc_dec_form_field.dart';
 import 'package:ecom/ui/widget/products_details/product_image_slider.dart';
+import 'package:ecom/ui/widget/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,9 +25,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   ProductDetailsController productDetailsController =
       Get.put(ProductDetailsController());
   final UserController _userController = Get.put(UserController());
+  final CartController cartController = Get.put(CartController());
   Color? selectedColor;
   String? selectedSize;
   double totalAmount = 0.0;
+  var selectedColorIndex = 0;
+  var selectedSizeIndex = 0;
 
   @override
   void initState() {
@@ -174,26 +178,34 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               Row(
                                 children: [
-                                  for (int i = 0;
-                                      i < availabeColors.length;
-                                      i++)
-                                    GestureDetector(
-                                      onTap: () {
-                                        selectedColor = availabeColors[i];
-                                        setState(() {});
+                                  SizedBox(
+                                    width: 300,
+                                    height: 50,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: availabeColors.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            selectedColorIndex = index;
+                                            setState(() {});
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: CircleAvatar(
+                                                backgroundColor:
+                                                    availabeColors[index],
+                                                radius: 15,
+                                                child: selectedColorIndex ==
+                                                        index
+                                                    ? const Icon(Icons.check)
+                                                    : null),
+                                          ),
+                                        );
                                       },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: CircleAvatar(
-                                          backgroundColor: availabeColors[i],
-                                          radius: 15,
-                                          child:
-                                              selectedColor == availabeColors[i]
-                                                  ? const Icon(Icons.check)
-                                                  : null,
-                                        ),
-                                      ),
-                                    )
+                                    ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(
@@ -210,50 +222,48 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               const SizedBox(
                                 height: 6,
                               ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    for (int i = 0;
-                                        i < availabeSize.length;
-                                        i++)
-                                      GestureDetector(
-                                        onTap: () {
-                                          selectedSize = availabeSize[i];
-                                          setState(() {});
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              color: selectedSize ==
-                                                      availabeSize[i]
+                              SizedBox(
+                                width: 300,
+                                height: 50,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: availabeSize.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        selectedSizeIndex = index;
+                                        setState(() {});
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                            color: selectedSizeIndex == index
+                                                ? AppColors.primaryColor
+                                                : null,
+                                            border: Border.all(
+                                              color: selectedSizeIndex == index
                                                   ? AppColors.primaryColor
-                                                  : null,
-                                              border: Border.all(
-                                                color: selectedSize ==
-                                                        availabeSize[i]
-                                                    ? AppColors.primaryColor
-                                                    : Colors.black54,
-                                                width: 2,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
+                                                  : Colors.black54,
+                                              width: 2,
                                             ),
-                                            child: Text(
-                                              availabeSize[i],
-                                              style: TextStyle(
-                                                color: selectedSize ==
-                                                        availabeSize[i]
-                                                    ? Colors.white
-                                                    : Colors.black87,
-                                              ),
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                          child: Text(
+                                            availabeSize[index],
+                                            style: TextStyle(
+                                              color: selectedSizeIndex == index
+                                                  ? Colors.white
+                                                  : Colors.black87,
                                             ),
                                           ),
                                         ),
                                       ),
-                                  ],
+                                    );
+                                  },
                                 ),
                               ),
                               const SizedBox(
@@ -315,14 +325,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     SizedBox(
                       width: 120,
-                      child: AppElevatedButton(
-                        text: 'Add to Cart',
-                        onTap: () {
-                          final bool _authState =
-                              _userController.checkAuthState();
-                          if (_authState) {}
-                        },
-                      ),
+                      child:
+                          GetBuilder<CartController>(builder: (cartController) {
+                        if (cartController.addToCartInProgress) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return AppElevatedButton(
+                          text: 'Add to Cart',
+                          onTap: () async {
+                            await addToCart(cartController);
+                          },
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -332,6 +348,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         }
       }),
     );
+  }
+
+  Future<void> addToCart(CartController cartController) async {
+    final bool authState = _userController.checkAuthState();
+    if (authState && selectedSize != null && selectedColor != null) {
+      final result = await cartController.addToCart(widget.productId,
+          selectedSize ?? '', selectedColor?.value.toString() ?? '');
+      if (result) {
+        if (mounted) {
+          showSnackbar(context, 'added to cart');
+        }
+      } else {
+        if (mounted) {
+          showSnackbar(context, 'Add to card failed! try again', true);
+        }
+      }
+    }
   }
 
   List<Color> getColorsFromString(String colors) {

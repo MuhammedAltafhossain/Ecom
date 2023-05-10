@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ecom/data/model/read_profile.dart';
-import 'package:ecom/data/model/user_details.dart';
+import 'package:ecom/data/model/read_profile_model.dart';
+import 'package:ecom/data/model/user_details_model.dart';
 import 'package:ecom/data/network_utils.dart';
 import 'package:ecom/data/urls.dart';
 import 'package:ecom/ui/getx/user_controller.dart';
@@ -57,8 +57,9 @@ class AuthController extends GetxController {
           profileData.shippingAddress ?? '',
           profileData.email!,
           profileData.city ?? '',
-          profileData.mobile ?? '',
           profileData.id!,
+          profileData.mobile ?? '',
+
         );
         userController.saveUserDetails(userDetails);
         return true;

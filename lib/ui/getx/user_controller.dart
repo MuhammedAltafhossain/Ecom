@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ecom/data/model/user_details.dart';
+import 'package:ecom/data/model/user_details_model.dart';
 import 'package:ecom/ui/screens/email_auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,4 +54,13 @@ class UserController extends GetxController {
     }
     return true;
   }
+
+  Future<void> logout() async{
+    userToken = null;
+    userDetails = null;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+   await sharedPreferences.clear();
+
+  }
+
 }

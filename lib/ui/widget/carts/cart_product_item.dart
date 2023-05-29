@@ -1,12 +1,14 @@
+import 'package:ecom/data/model/cart_list_model.dart';
 import 'package:ecom/ui/utils/app_colors.dart';
 import 'package:ecom/ui/widget/inc_dec_form_field.dart';
 import 'package:flutter/material.dart';
 
 class CartProductItem extends StatelessWidget {
   const CartProductItem({
-    super.key,
+    super.key, required this.cartData,
   });
 
+  final CartData cartData;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,8 +19,8 @@ class CartProductItem extends StatelessWidget {
           const SizedBox(
             width: 8,
           ),
-          Image.asset(
-            'assets/images/product.png',
+          Image.network(
+            cartData.product?.image ?? '',
             height: 70,
             width: 90,
             fit: BoxFit.cover,
@@ -33,27 +35,27 @@ class CartProductItem extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Product Name',
-                            style: TextStyle(
+                          Text(
+                            cartData.product?.title ?? '',
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                               letterSpacing: 0.4,
                             ),
                           ),
                           Row(
-                            children: const [
+                            children: [
                               Text(
-                                'Color: Block',
-                                style: TextStyle(
+                                'Color: ${cartData.color ?? ''}',
+                                style: const TextStyle(
                                     fontSize: 13, color: Colors.black),
                               ),
-                              SizedBox(
-                                width: 12,
+                              const SizedBox(
+                                width: 4,
                               ),
                               Text(
-                                'Size : Xl',
-                                style: TextStyle(
+                                'Size : ${cartData.size ?? ''}',
+                                style: const TextStyle(
                                     fontSize: 13, color: Colors.black),
                               ),
                             ],
@@ -66,7 +68,7 @@ class CartProductItem extends StatelessWidget {
                           icon: const Icon(
                             Icons.delete_outline,
                             color: Colors.red,
-                          ))
+                          ),),
                     ],
                   ),
                   const SizedBox(
@@ -76,7 +78,7 @@ class CartProductItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '\$100',
+                        '\$${cartData.product?.price ?? 0}',
                         style: TextStyle(
                           color: AppColors.primaryColor,
                           fontWeight: FontWeight.w600,

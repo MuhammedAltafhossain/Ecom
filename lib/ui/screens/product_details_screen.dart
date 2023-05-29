@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecom/data/model/product_details_model.dart';
 import 'package:ecom/ui/getx/cart_controller.dart';
 import 'package:ecom/ui/getx/product_details_controller.dart';
@@ -39,6 +41,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       productDetailsController.getProductDetails(widget.productId);
     });
+  }
+
+  Future<void> addToCart(CartController cartController) async {
+
+    final bool authState = _userController.checkAuthState();
+    log(selectedColor.toString());
+     if (authState && selectedSize != null && selectedColor != null) {
+
+      final result = await cartController.addToCart(widget.productId,
+          selectedSize ?? '', selectedColor?.value.toString() ?? '');
+      if (result) {
+        if (mounted) {
+          showSnackbar(context, 'added to cart');
+        }
+      } else {
+        if (mounted) {
+          showSnackbar(context, 'Add to card failed! try again', true);
+        }
+      }
+    }
   }
 
   @override
@@ -186,9 +208,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       itemCount: availabeColors.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
+                                        if(index == 1){
+                                          selectedColor = availabeColors[index];
+                                        }
                                         return GestureDetector(
                                           onTap: () {
                                             selectedColorIndex = index;
+                                            selectedColor = availabeColors[index];
                                             setState(() {});
                                           },
                                           child: Padding(
@@ -233,6 +259,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     return GestureDetector(
                                       onTap: () {
                                         selectedSizeIndex = index;
+                                        selectedSize = availabeSize[index];
                                         setState(() {});
                                       },
                                       child: Padding(
@@ -350,22 +377,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Future<void> addToCart(CartController cartController) async {
-    final bool authState = _userController.checkAuthState();
-    if (authState && selectedSize != null && selectedColor != null) {
-      final result = await cartController.addToCart(widget.productId,
-          selectedSize ?? '', selectedColor?.value.toString() ?? '');
-      if (result) {
-        if (mounted) {
-          showSnackbar(context, 'added to cart');
-        }
-      } else {
-        if (mounted) {
-          showSnackbar(context, 'Add to card failed! try again', true);
-        }
-      }
-    }
-  }
+
 
   List<Color> getColorsFromString(String colors) {
     List<Color> hexaColors = [];

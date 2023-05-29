@@ -2,7 +2,6 @@ import 'package:ecom/ui/getx/bottom_navigation_controller.dart';
 import 'package:ecom/ui/getx/category_controller.dart';
 import 'package:ecom/ui/getx/home_controller.dart';
 import 'package:ecom/ui/getx/product_controller.dart';
-import 'package:ecom/ui/screens/category_screen.dart';
 import 'package:ecom/ui/screens/product_list_screen.dart';
 import 'package:ecom/ui/screens/section_view_screen.dart';
 import 'package:ecom/ui/utils/app_colors.dart';

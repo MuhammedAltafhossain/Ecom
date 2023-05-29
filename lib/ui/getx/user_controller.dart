@@ -35,7 +35,11 @@ class UserController extends GetxController {
   Future<void> getUserDetails() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? user = sharedPreferences.getString('user') ?? '';
-    userDetails = UserDetails.fromJson(jsonDecode(user));
+    print('User Data ${user}');
+    if(user != null){
+      userDetails = UserDetails.fromJson(jsonDecode(user));
+
+    }
   }
 
   void redireactUnauthenticatedUser() {

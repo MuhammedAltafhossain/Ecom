@@ -44,11 +44,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Future<void> addToCart(CartController cartController) async {
-
     final bool authState = _userController.checkAuthState();
     log(selectedColor.toString());
-     if (authState && selectedSize != null && selectedColor != null) {
-
+    if (authState && selectedSize != null && selectedColor != null) {
       final result = await cartController.addToCart(widget.productId,
           selectedSize ?? '', selectedColor?.value.toString() ?? '');
       if (result) {
@@ -79,7 +77,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
       body: GetBuilder<ProductDetailsController>(
           builder: (productDetailsController) {
-        if (productDetailsController.getProductDetailsInProgress) {
+        if (productDetailsController.getProductDetailsInProgress ||
+            productDetailsController.productDetailsModel.data == null) {
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -208,13 +207,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       itemCount: availabeColors.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        if(index == 1){
+                                        if (index == 1) {
                                           selectedColor = availabeColors[index];
                                         }
                                         return GestureDetector(
                                           onTap: () {
                                             selectedColorIndex = index;
-                                            selectedColor = availabeColors[index];
+                                            selectedColor =
+                                                availabeColors[index];
                                             setState(() {});
                                           },
                                           child: Padding(
@@ -376,8 +376,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       }),
     );
   }
-
-
 
   List<Color> getColorsFromString(String colors) {
     List<Color> hexaColors = [];

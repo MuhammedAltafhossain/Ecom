@@ -92,7 +92,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
               //Home Controller listen
               GetBuilder<HomeController>(builder: (homeController) {
-                if (homeController.getProductSliderInProgress) {
+                if (homeController.getProductSliderInProgress ||
+                    homeController.productSliderModel.data == null) {
                   return ShimmerLoaderWidget(
                     sizedBoxHeight: 180,
                     highlightColor: AppColors.primaryColor,
@@ -194,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                      const ProductViewByRemark(remarkName: 'Special'),
+                          const ProductViewByRemark(remarkName: 'Special'),
                     ),
                   );
                 },
@@ -231,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                      const ProductViewByRemark(remarkName: 'New'),
+                          const ProductViewByRemark(remarkName: 'New'),
                     ),
                   );
                 },
